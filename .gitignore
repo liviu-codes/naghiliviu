@@ -42,3 +42,4 @@ next-env.d.ts
 
 # internal notes / content docs
 /mds
+/.agents
