@@ -1,6 +1,9 @@
 import type { Dictionary } from "./types";
 
 export const en: Dictionary = {
+  a11y: {
+    skipToContent: "Skip to content",
+  },
   meta: {
     title: "Naghi Liviu — Team Lead & Senior Full-Stack Engineer",
     description:
@@ -60,23 +63,43 @@ export const en: Dictionary = {
     categories: [
       {
         name: "Languages",
-        items: ["TypeScript", "JavaScript (ES6+)", "PHP 8", "SQL", "Python", "Bash"],
+        items: ["TypeScript", "JavaScript (ES6+)", "PHP 8", "SQL", "HTML5", "CSS / Sass", "Python", "Bash"],
       },
       {
         name: "Frontend",
-        items: ["React", "Redux", "Tailwind CSS", "Radix UI", "react-hook-form", "TanStack Table", "Zod"],
+        items: [
+          "React",
+          "Next.js",
+          "Astro",
+          "Redux",
+          "Tailwind CSS",
+          "Bootstrap",
+          "Radix UI",
+          "react-hook-form",
+          "TanStack Table",
+          "Zod",
+        ],
       },
       {
         name: "Backend",
-        items: ["PHP / Laminas", "Node.js", "Express", "REST API Design", "Microservices", "OAuth 2.0 / JWT"],
+        items: [
+          "PHP / Laminas",
+          "WordPress",
+          "Node.js",
+          "Express",
+          "GraphQL / Apollo Federation",
+          "REST API Design",
+          "Microservices",
+          "OAuth 2.0 / JWT",
+        ],
       },
       {
         name: "Infrastructure",
-        items: ["Docker", "Azure DevOps", "GitHub Actions", "MySQL / PostgreSQL", "Redis", "Git"],
+        items: ["Docker", "Azure DevOps", "GitHub Actions", "MySQL / PostgreSQL", "Redis", "AWS S3", "Git"],
       },
       {
         name: "Testing & Quality",
-        items: ["Jest", "Vitest", "React Testing Library", "PHPUnit", "ESLint", "Prettier"],
+        items: ["Jest", "Vitest", "React Testing Library", "PHPUnit", "SonarQube", "ESLint", "Prettier"],
       },
       {
         name: "Leadership",
@@ -90,7 +113,15 @@ export const en: Dictionary = {
     screenshotPlaceholder: "Screenshot placeholder",
     liveDemo: "Live demo",
     source: "Source",
+    caseStudyLink: "Case study",
     employerNote: "Employer project, not publicly available",
+    caseStudy: {
+      overviewLabel: "Overview",
+      highlightsLabel: "Highlights",
+      visitSiteLabel: "Visit live site",
+      backLabel: "Back to projects",
+      notFound: "Project not found.",
+    },
     items: [
       {
         title: "B17 Coffee Lab",
@@ -99,6 +130,17 @@ export const en: Dictionary = {
         tags: ["Web Design", "E-commerce", "WordPress"],
         liveHref: "https://b17coffeelab.ro/",
         image: "b17",
+        slug: "b17-coffee-lab",
+        caseStudy: {
+          overview:
+            "B17 Coffee Lab is a specialty coffee cafe with three locations in Bucharest. The site works as both a storefront and an online shop: visitors can browse the coffee bean catalog, place orders online, and find contact and location details for all three cafes. It's built on WordPress, which lets the B17 team update the catalog and site content themselves without needing a developer for routine changes.",
+          highlights: [
+            "Coffee bean catalog with online ordering",
+            "Location and contact details for all three Bucharest cafes",
+            "Content the B17 team can update themselves through WordPress",
+            "Responsive layout built for browsing on mobile",
+          ],
+        },
       },
       {
         title: "Personal Portfolio Website",
@@ -154,5 +196,10 @@ export const en: Dictionary = {
   },
   footer: {
     builtWith: (year: number) => `© ${year} Naghi Liviu. Built with Next.js & Tailwind CSS.`,
+  },
+  github: {
+    reposLabel: "Public repos",
+    followersLabel: "Followers",
+    sinceLabel: "On GitHub since",
   },
 };

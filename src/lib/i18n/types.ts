@@ -5,6 +5,11 @@ export interface SkillCategory {
   items: string[];
 }
 
+export interface ProjectCaseStudy {
+  overview: string;
+  highlights: string[];
+}
+
 export interface ProjectItem {
   title: string;
   description: string;
@@ -13,9 +18,14 @@ export interface ProjectItem {
   sourceHref?: string;
   image?: string;
   note?: string;
+  slug?: string;
+  caseStudy?: ProjectCaseStudy;
 }
 
 export interface Dictionary {
+  a11y: {
+    skipToContent: string;
+  };
   meta: {
     title: string;
     description: string;
@@ -78,8 +88,16 @@ export interface Dictionary {
     screenshotPlaceholder: string;
     liveDemo: string;
     source: string;
+    caseStudyLink: string;
     employerNote: string;
     items: ProjectItem[];
+    caseStudy: {
+      overviewLabel: string;
+      highlightsLabel: string;
+      visitSiteLabel: string;
+      backLabel: string;
+      notFound: string;
+    };
   };
   testimonials: {
     heading: string;
@@ -119,5 +137,10 @@ export interface Dictionary {
   };
   footer: {
     builtWith: (year: number) => string;
+  };
+  github: {
+    reposLabel: string;
+    followersLabel: string;
+    sinceLabel: string;
   };
 }

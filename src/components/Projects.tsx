@@ -1,15 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowSquareOut, ImageBroken } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { RevealOnScroll } from "./RevealOnScroll";
 import type { ProjectItem } from "@/lib/i18n/types";
-
-const SHOTS: Record<string, string> = {
-  b17: "/img/b17-coffee-lab.png",
-  portfolio: "/img/portfolio-snapshot.png",
-};
+import { PROJECT_SHOTS as SHOTS } from "@/lib/projectImages";
 
 function TagList({ tags }: { tags: string[] }) {
   return (
@@ -29,12 +26,14 @@ function TagList({ tags }: { tags: string[] }) {
 function FeaturedProjectCard({
   project,
   liveDemoLabel,
+  caseStudyLabel,
 }: {
   project: ProjectItem;
   liveDemoLabel: string;
+  caseStudyLabel: string;
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-elevated transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_48px_-24px_var(--accent)]">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-bg-elevated transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_48px_-24px_var(--accent)]">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={SHOTS[project.image ?? ""]}
@@ -45,21 +44,37 @@ function FeaturedProjectCard({
         />
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">
-        <h3 className="text-xl font-bold text-fg">{project.title}</h3>
+        {project.slug ? (
+          <Link href={`/projects/${project.slug}`} className="w-fit hover:text-accent">
+            <h3 className="text-xl font-bold text-fg">{project.title}</h3>
+          </Link>
+        ) : (
+          <h3 className="text-xl font-bold text-fg">{project.title}</h3>
+        )}
         <p className="text-sm leading-relaxed text-fg-muted">{project.description}</p>
         <div className="mt-auto flex items-center justify-between pt-2">
           <TagList tags={project.tags} />
-          {project.liveHref && (
-            <a
-              href={project.liveHref}
-              target={project.liveHref.startsWith("http") ? "_blank" : undefined}
-              rel={project.liveHref.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-accent"
-            >
-              {liveDemoLabel}
-              <ArrowSquareOut size={15} />
-            </a>
-          )}
+          <div className="flex shrink-0 items-center gap-4">
+            {project.slug && (
+              <Link
+                href={`/projects/${project.slug}`}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-accent"
+              >
+                {caseStudyLabel}
+              </Link>
+            )}
+            {project.liveHref && (
+              <a
+                href={project.liveHref}
+                target={project.liveHref.startsWith("http") ? "_blank" : undefined}
+                rel={project.liveHref.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-accent"
+              >
+                {liveDemoLabel}
+                <ArrowSquareOut size={15} />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </article>
@@ -74,7 +89,7 @@ function CompactProjectCard({
   liveDemoLabel: string;
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-bg-elevated transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_48px_-24px_var(--accent)]">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-bg-elevated transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_48px_-24px_var(--accent)]">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={SHOTS[project.image ?? ""]}
@@ -153,7 +168,11 @@ export function Projects() {
 
       <div className="mt-10 grid gap-5 lg:grid-cols-5">
         <RevealOnScroll delay={0.05} className="lg:col-span-3">
-          <FeaturedProjectCard project={b17} liveDemoLabel={t.projects.liveDemo} />
+          <FeaturedProjectCard
+            project={b17}
+            liveDemoLabel={t.projects.liveDemo}
+            caseStudyLabel={t.projects.caseStudyLink}
+          />
         </RevealOnScroll>
         <RevealOnScroll delay={0.1} className="lg:col-span-2">
           <CompactProjectCard project={portfolio} liveDemoLabel={t.projects.liveDemo} />

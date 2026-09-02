@@ -14,6 +14,7 @@
   --accent: #047857;
   --accent-contrast: #ffffff;
   --shadow-tint: 0 0% 0%;
+  --header-bg: #ffffff;
 }
 
 .dark {
@@ -28,6 +29,7 @@
   --accent: #34d399;
   --accent-contrast: #052e1f;
   --shadow-tint: 152 60% 2%;
+  --header-bg: #232327;
 }
 
 @theme inline {
@@ -41,6 +43,7 @@
   --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
   --color-accent-contrast: var(--accent-contrast);
+  --color-header: var(--header-bg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

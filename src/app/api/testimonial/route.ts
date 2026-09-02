@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { testimonials } from "@/data/testimonials";
 
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? "liviu.codes@gmail.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "Portfolio Testimonials <onboarding@resend.dev>";
@@ -9,6 +10,34 @@ function escapeHtml(value: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function jsStringLiteral(value: string) {
+  return JSON.stringify(value);
+}
+
+function buildTestimonialSnippet({
+  name,
+  role,
+  rating,
+  testimonial,
+}: {
+  name: string;
+  role: string;
+  rating: number;
+  testimonial: string;
+}) {
+  const nextId = String(testimonials.length + 1);
+  return `{
+    id: "${nextId}",
+    name: ${jsStringLiteral(name)},
+    role: ${jsStringLiteral(role)},
+    rating: ${rating},
+    quote: {
+      en: ${jsStringLiteral(testimonial)},
+      ro: ${jsStringLiteral(testimonial)}, // TODO: translate to Romanian
+    },
+  },`;
 }
 
 export async function POST(request: Request) {
@@ -43,11 +72,12 @@ export async function POST(request: Request) {
 
   try {
     const resend = new Resend(apiKey);
+    const snippet = buildTestimonialSnippet({ name, role, rating, testimonial });
     await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
       subject: `New testimonial submission from ${name} (${rating}★)`,
-      html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Role / Company:</strong> ${escapeHtml(role)}</p><p><strong>Rating:</strong> ${rating} / 5</p><p><strong>Testimonial:</strong></p><p>${escapeHtml(testimonial).replace(/\n/g, "<br/>")}</p><p><em>Not yet published. Add to src/data/testimonials.ts after review.</em></p>`,
+      html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Role / Company:</strong> ${escapeHtml(role)}</p><p><strong>Rating:</strong> ${rating} / 5</p><p><strong>Testimonial:</strong></p><p>${escapeHtml(testimonial).replace(/\n/g, "<br/>")}</p><p><em>Not yet published. Review, then paste the entry below into the <code>testimonials</code> array in src/data/testimonials.ts:</em></p><pre style="background:#f4f4f5;border:1px solid #e4e4e7;border-radius:8px;padding:12px 16px;font-family:ui-monospace,monospace;font-size:13px;white-space:pre-wrap;overflow-wrap:break-word;">${escapeHtml(snippet)}</pre>`,
     });
     return Response.json({ ok: true });
   } catch (error) {

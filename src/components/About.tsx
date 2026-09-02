@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Image from "next/image";
 import { Briefcase, CheckCircle, MapPin } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
@@ -9,7 +9,7 @@ import { Lightbox } from "./Lightbox";
 
 const PHOTO_SRC = "/img/profile-pic.png";
 
-export function About() {
+export function About({ githubStats }: { githubStats?: ReactNode }) {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
 
@@ -67,6 +67,7 @@ export function About() {
               ))}
             </dl>
           </RevealOnScroll>
+          {githubStats && <RevealOnScroll delay={0.25}>{githubStats}</RevealOnScroll>}
         </div>
       </div>
 
